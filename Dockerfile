@@ -18,6 +18,8 @@ ENV PATH="/root/.local/bin:$PATH"
 # Copy poetry files
 COPY pyproject.toml poetry.lock ./
 
+COPY .env .
+
 RUN poetry --version
 
 # Configure Poetry to not create a virtual environment inside the container
