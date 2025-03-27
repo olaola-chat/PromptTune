@@ -1,9 +1,14 @@
 import re
 
-def extract_between_tags(tag: str, string: str, strip: bool = False) -> list[str]:
-    ext_list = re.findall(f"<{tag}>(.+?)</{tag}>", string, re.DOTALL)
+def extract_between_tags(tag: str, content: str, strip: bool = False) -> list[str]:
+    ext_list = re.findall(f"<{tag}>(.+?)</{tag}>", content, re.DOTALL)
     if strip:
         ext_list = [e.strip() for e in ext_list]
+    else:
+        content = content + "</Instructions>"
+        ext_list = re.findall(f"<{tag}>(.+?)</{tag}>", content, re.DOTALL)
+        ext_list = [e.strip() for e in ext_list]
+
     return ext_list
 
 def strip_last_sentence(text):
