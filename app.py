@@ -55,19 +55,17 @@ def generate_prompt():
             # Initialize LLM service with app logger
             if thinking_mode:
                 llm_service = LLMService(
-                    api_key=os.getenv('ANTHROPIC_API_KEY'), 
                     model_name="claude-3-7-sonnet-thinking",
                     logger=app.logger
                 )
             else:
                 llm_service = LLMService(
-                    api_key=os.getenv('ANTHROPIC_API_KEY'), 
                     model_name="claude-3-7-sonnet",
                     logger=app.logger
                 )
             
             # Generate prompt using LLM service with status updates
-            prompt = llm_service.generate_prompt(
+            prompt = llm_service.generate_prompt_bedrock(
                 task=task,
                 progress_callback=lambda _, status: status_callback(status)
             )
@@ -114,4 +112,4 @@ def health_check():
 if __name__ == '__main__':
     #app.run(debug=True, port=6188)
     app.run(host='0.0.0.0', port=61188, debug=False)
-    #gunicorn -w 4 -b 0.0.0.0:61188 app:app
+    #gunicorn -w 4 -b 0.0.0.0:61188 app:app --timeout 300
