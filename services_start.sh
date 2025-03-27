@@ -1,0 +1,1 @@
+docker run -p 61188:61188 <image_name>
